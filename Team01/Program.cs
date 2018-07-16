@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Team01
+namespace Game1
 {
 #if WINDOWS || LINUX
     /// <summary>

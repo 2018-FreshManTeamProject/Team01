@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 /// <summary>
 /// プロジェクト名がnamespaceとなります
 /// </summary>
-namespace Team01
+namespace Game1
 {
     /// <summary>
     /// ゲームの基盤となるメインのクラス
@@ -15,9 +15,10 @@ namespace Team01
     public class Game1 : Game
     {
         // フィールド（このクラスの情報を記述）
-        private GraphicsDeviceManager graphicsDeviceManager;//グラフィックスデバイスを管理するオブジェクト
+        private GraphicsDeviceManager
+            graphicsDeviceManager;//グラフィックスデバイスを管理するオブジェクト
         private SpriteBatch spriteBatch;//画像をスクリーン上に描画するためのオブジェクト
-
+        private Renderer renderer;
         /// <summary>
         /// コンストラクタ
         /// （new で実体生成された際、一番最初に一回呼び出される）
@@ -28,6 +29,9 @@ namespace Team01
             graphicsDeviceManager = new GraphicsDeviceManager(this);
             //コンテンツデータ（リソースデータ）のルートフォルダは"Contentに設定
             Content.RootDirectory = "Content";
+
+            graphicsDeviceManager.PreferredBackBufferWidth = 640;
+            graphicsDeviceManager.PreferredBackBufferHeight = 480;
         }
 
         /// <summary>
@@ -36,7 +40,7 @@ namespace Team01
         protected override void Initialize()
         {
             // この下にロジックを記述
-
+            renderer = new Renderer(Content, GraphicsDevice);
 
 
             // この上にロジックを記述
@@ -53,7 +57,7 @@ namespace Team01
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // この下にロジックを記述
-
+            renderer.LoadContent("9c1c1ef7d7fa1166748984dbf999c252");
 
             // この上にロジックを記述
         }
@@ -78,7 +82,7 @@ namespace Team01
         protected override void Update(GameTime gameTime)
         {
             // ゲーム終了処理（ゲームパッドのBackボタンかキーボードのエスケープボタンが押されたら終了）
-            if((GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) ||
+            if ((GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) ||
                  (Keyboard.GetState().IsKeyDown(Keys.Escape)))
             {
                 Exit();
@@ -100,7 +104,9 @@ namespace Team01
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // この下に描画ロジックを記述
-
+            renderer.Begin();
+            renderer.DrawTexture("9c1c1ef7d7fa1166748984dbf999c252", Vector2.Zero);
+            renderer.End();
 
             //この上にロジックを記述
             base.Draw(gameTime); // 親クラスの更新処理呼び出し。絶対に消すな！！
